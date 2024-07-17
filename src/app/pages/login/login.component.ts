@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-login',
@@ -8,6 +9,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
+  private jwtHelper = new JwtHelperService();
+  private loggedInUsername!: string;
+
   loginObj: any = {
     EmailId: '',
     Password: '',
@@ -28,6 +32,15 @@ export class LoginComponent {
       .subscribe((resp: any) => {
         console.log('Register: ' + resp.firstName);
         localStorage.setItem('loginTOken', resp.token);
+
+        this.loggedInUsername = this.jwtHelper.decodeToken(
+          resp.token
+        ).firstName;
+        alert(
+          this.loggedInUsername +
+            ', ' +
+            this.jwtHelper.decodeToken(resp.token).sub
+        );
       });
     // this.http.post('https://freeapi.miniprojectideas.com/api/User/Login', this.loginObj).subscribe((res:any)=>{
     //   if(res.result) {
