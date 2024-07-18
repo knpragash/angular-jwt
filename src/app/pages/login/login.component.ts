@@ -10,15 +10,16 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class LoginComponent {
   private jwtHelper = new JwtHelperService();
-  private loggedInUsername!: string;
+  private username!: string;
 
   loginObj: any = {
-    EmailId: '',
-    Password: '',
+    email: '',
+    password: '',
   };
 
   registerObj: any = {
-    userName: '',
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
   };
@@ -26,31 +27,16 @@ export class LoginComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
   onRegister() {
-    // debugger;
     this.http
       .post('http://localhost:8080/register', this.registerObj)
       .subscribe((resp: any) => {
-        console.log('Register: ' + resp.firstName);
         localStorage.setItem('loginTOken', resp.token);
-
-        this.loggedInUsername = this.jwtHelper.decodeToken(
-          resp.token
-        ).firstName;
+        this.username = this.jwtHelper.decodeToken(resp.token).firstName;
         alert(
-          this.loggedInUsername +
-            ', ' +
-            this.jwtHelper.decodeToken(resp.token).sub
+          this.username + ', ' + this.jwtHelper.decodeToken(resp.token).sub
         );
+        //     this.router.navigateByUrl('/dashboard');
       });
-    // this.http.post('https://freeapi.miniprojectideas.com/api/User/Login', this.loginObj).subscribe((res:any)=>{
-    //   if(res.result) {
-    //     alert('login Success');
-    //     localStorage.setItem('loginTOken', res.data.token);
-    //     this.router.navigateByUrl('/dashboard');
-    //   } else {
-    //     alert(res.message);
-    //   }
-    // })
   }
 
   onLogin() {

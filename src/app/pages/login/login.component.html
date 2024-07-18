@@ -5,9 +5,34 @@
     <div class="signup">
       <form>
         <label for="chk" aria-hidden="true">Register</label>
-        <input type="text" name="txt" placeholder="User name" required="" />
-        <input type="email" name="email" placeholder="Email" required="" />
-        <input type="password" name="pswd" placeholder="Password" required="" />
+        <input
+          type="text"
+          name="firstname"
+          [(ngModel)]="registerObj.firstName"
+          placeholder="First Name"
+          required=""
+        />
+        <input
+          type="text"
+          name="lastname"
+          [(ngModel)]="registerObj.lastName"
+          placeholder="Last Name"
+          required=""
+        />
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="registerObj.email"
+          placeholder="Email"
+          required=""
+        />
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="registerObj.password"
+          placeholder="Password"
+          required=""
+        />
         <button (click)="onRegister()">Register</button>
       </form>
     </div>
@@ -18,14 +43,14 @@
         <input
           type="email"
           name="EmailId"
-          [(ngModel)]="loginObj.EmailId"
+          [(ngModel)]="loginObj.email"
           placeholder="Email"
           required=""
         />
         <input
           type="password"
           name="Password"
-          [(ngModel)]="loginObj.Password"
+          [(ngModel)]="loginObj.password"
           placeholder="Password"
           required=""
         />
