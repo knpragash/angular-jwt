@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -29,13 +29,33 @@ export class LoginComponent {
   onRegister() {
     this.http
       .post('http://localhost:8080/register', this.registerObj)
-      .subscribe((resp: any) => {
-        localStorage.setItem('loginTOken', resp.token);
-        this.username = this.jwtHelper.decodeToken(resp.token).firstName;
-        alert(
-          this.username + ', ' + this.jwtHelper.decodeToken(resp.token).sub
-        );
-        //     this.router.navigateByUrl('/dashboard');
+      .subscribe({
+        next: (resp: any) => {
+          alert('Resp: ' + resp);
+          localStorage.setItem('loginTOken', resp.token);
+          this.username = this.jwtHelper.decodeToken(resp.token).firstName;
+          alert(
+            this.username + ', ' + this.jwtHelper.decodeToken(resp.token).sub
+          );
+          //     this.router.navigateByUrl('/dashboard');
+        },
+        // error: (erResponse: HttpErrorResponse) => {
+        //   alert('message: ' + erResponse.error.errorCode);
+        //   alert('errorMessage: ' + erResponse.error.errorMessage);
+        //   alert('name: ' + erResponse.error.apiPath);
+        // },
+        error: (error) => {
+          alert(
+            'mi: ' +
+              error.error.errorMessage +
+              ', ' +
+              error.error.apiPath +
+              ', ' +
+              error.error.errorCode +
+              ', ' +
+              error.status
+          );
+        },
       });
   }
 
