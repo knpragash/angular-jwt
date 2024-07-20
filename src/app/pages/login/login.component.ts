@@ -28,35 +28,18 @@ export class LoginComponent {
 
   onRegister() {
     this.http
-      .post('http://localhost:8080/register', this.registerObj)
-      .subscribe({
-        next: (resp: any) => {
-          alert('Resp: ' + resp);
-          localStorage.setItem('loginTOken', resp.token);
-          this.username = this.jwtHelper.decodeToken(resp.token).firstName;
-          alert(
-            this.username + ', ' + this.jwtHelper.decodeToken(resp.token).sub
-          );
-          //     this.router.navigateByUrl('/dashboard');
+      .post('http://localhost:8080/register', this.registerObj).subscribe(
+        (response: any) => {
+          localStorage.setItem('loginTOken', response.token);
+          this.username = this.jwtHelper.decodeToken(response.token).firstName;
+          // alert(this.username + ', ' + this.jwtHelper.decodeToken(response.token).sub);
+          this.router.navigateByUrl('/dashboard');
         },
-        // error: (erResponse: HttpErrorResponse) => {
-        //   alert('message: ' + erResponse.error.errorCode);
-        //   alert('errorMessage: ' + erResponse.error.errorMessage);
-        //   alert('name: ' + erResponse.error.apiPath);
-        // },
-        error: (error) => {
-          alert(
-            'mi: ' +
-              error.error.errorMessage +
-              ', ' +
-              error.error.apiPath +
-              ', ' +
-              error.error.errorCode +
-              ', ' +
-              error.status
-          );
-        },
-      });
+        (errorResponse: any) => {
+          alert(errorResponse.error.errorMessage + ", " + errorResponse.error.errorCode + ", " + errorResponse.status);
+              // this.router.navigateByUrl('/dashboard');
+        }
+      )
   }
 
   onLogin() {

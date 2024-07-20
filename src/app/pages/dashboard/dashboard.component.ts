@@ -13,11 +13,10 @@ export class DashboardComponent {
   }
 
   loadUsers() {
-    // debugger;
-    this.http
-      .get('https://freeapi.miniprojectideas.com/api/User/GetAllUsers')
-      .subscribe((res: any) => {
-        this.users = res.data;
-      });
+    // this.http
+    //   .get('https://freeapi.miniprojectideas.com/api/User/GetAllUsers')
+    //   .subscribe((res: any) => {
+    //     this.users = res.data;
+    //   });
   }
 }
