@@ -28,7 +28,7 @@ export class LoginComponent {
 
   onRegister() {
     this.http
-      .post('http://localhost:8080/register', this.registerObj).subscribe(
+      .post('http://localhost:8084/register', this.registerObj).subscribe(
         (response: any) => {
           localStorage.setItem('loginTOken', response.token);
           this.username = this.jwtHelper.decodeToken(response.token).firstName;
@@ -45,7 +45,7 @@ export class LoginComponent {
   onLogin() {
     // debugger;
     this.http
-      .post('http://localhost:8080/login', this.loginObj)
+      .post('http://localhost:8084/login', this.loginObj)
       .subscribe((resp: any) => {
         console.log('Login: ' + resp.id + ', ' + resp.token);
       });
